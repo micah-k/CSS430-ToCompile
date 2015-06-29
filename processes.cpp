@@ -41,6 +41,7 @@ int main(int argc, char** argv){
 
             else if(pidgrepps == 0)        //Ps exec
             {
+                printf("Executing ps -A...");
                 dup2(fdgrepps[WR], STDOUT_FILENO);
                 close(fdgrepps[RD]);
                 execlp("ps", "ps", "-A", NULL);
@@ -49,6 +50,7 @@ int main(int argc, char** argv){
             else                     //Grep exec
             {
                 wait(NULL);
+                printf("Executing grep argv[1]...");
                 dup2(fdgrepps[RD], STDIN_FILENO);
                 close(fdgrepps[WR]);
                 dup2(fdwcgrep[WR], STDOUT_FILENO);
@@ -61,6 +63,7 @@ int main(int argc, char** argv){
         else                      //Wc exec
         {
             wait(NULL);
+            printf("Executing wc -l...");
             dup2(fdwcgrep[RD], STDOUT_FILENO);
             close(fdwcgrep[WR]);
             execlp("wc", "wc", "-l", NULL);
@@ -70,5 +73,6 @@ int main(int argc, char** argv){
     else                     //Main exec
     {
         wait(NULL);
+        printf("Return to parent loop.");
     }
 }
