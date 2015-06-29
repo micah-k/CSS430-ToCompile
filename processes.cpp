@@ -41,7 +41,7 @@ int main(int argc, char** argv){
             {
                 dup2(fdgrepps[WR], STDOUT_FILENO);
                 close(fdgrepps[WR]);
-                execlp('ps', 'ps', '-A', NULL);
+                execlp("ps", "ps", "-A", NULL);
             }
 
             else                     //Grep exec
@@ -50,7 +50,7 @@ int main(int argc, char** argv){
                 close(fdgrepps[RD]);
                 dup2(fdwcgrep[WR], STDOUT_FILENO);
                 close(fdwcgrep[WR]);
-                execlp('grep', 'grep', argv[1], NULL);
+                execlp("grep", "grep", argv[1], NULL);
             }
 
         }
@@ -59,7 +59,7 @@ int main(int argc, char** argv){
         {
             dup2(fdwcgrep[RD], STDOUT_FILENO);
             close(fdwcgrep[RD]);
-            execlp('wc', 'wc', '-l', NULL);
+            execlp("wc", "wc", "-l", NULL);
         }
     }
 
