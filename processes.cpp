@@ -48,6 +48,7 @@ int main(int argc, char** argv){
 
             else                     //Grep exec
             {
+                wait(NULL);
                 dup2(fdgrepps[RD], STDIN_FILENO);
                 close(fdgrepps[WR]);
                 dup2(fdwcgrep[WR], STDOUT_FILENO);
@@ -59,6 +60,7 @@ int main(int argc, char** argv){
 
         else                      //Wc exec
         {
+            wait(NULL);
             dup2(fdwcgrep[RD], STDOUT_FILENO);
             close(fdwcgrep[WR]);
             execlp("wc", "wc", "-l", NULL);
