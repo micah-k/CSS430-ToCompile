@@ -14,48 +14,47 @@ int main(int argc, char** argv){
     if((pidmainwc = fork()) < 0)
     {
       perror("Fork error, grep/ps.");
-      exit(EXIT_FAILURE);
+      return -1;
     }
-
-    printf("First fork successful.");
+    
     else if(pidmainwc == 0)        //Ps exec
     {
+        printf("First fork successful.");
         //Initialize first pipe, and fork to second process
-        printf("First pipe...");
+        printf("First pipe, second fork...");
         if(pipe(fdwcgrep) < 0)
         {
             perror("Pipe error, wc/grep.");
-            exit(EXIT_FAILURE);
+            return -1;
         }
 
-        printf("Second fork...");
         else if((pidwcgrep = fork()) < 0)
         {
             perror("Fork error, wc/grep.");
-            exit(EXIT_FAILURE);
+            return -1;
         }
-
-        printf("Fork successful.");
+        
         else if(pidwcgrep == 0)         //Grep code
         {
+            printf("Successful.");
             //Initialize second pipe, and fork to third process
-            printf("Second pipe...");
+            printf("Second pipe, third fork...");
             if(pipe(fdgrepps) < 0)
             {
               perror("Pipe error, grep/ps.");
-              exit(EXIT_FAILURE);
+              return -1;
             }
 
-            printf("Second fork...");
+            
             else if((pidgrepps = fork()) < 0)
             {
               perror("Fork error, grep/ps.");
-              exit(EXIT_FAILURE);
+              return -1;
             }
 
-            printf("Fork successful.");
             else if(pidgrepps == 0)        //Ps exec
             {
+                printf("Successful.");
                 printf("Executing ps -A...");
                 dup2(fdgrepps[WR], STDOUT_FILENO);
                 close(fdgrepps[RD]);
