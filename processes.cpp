@@ -42,16 +42,16 @@ int main(int argc, char** argv){
             else if(pidgrepps == 0)        //Ps exec
             {
                 dup2(fdgrepps[WR], STDOUT_FILENO);
-                close(fdgrepps[WR]);
+                close(fdgrepps[RD]);
                 execlp("ps", "ps", "-A", NULL);
             }
 
             else                     //Grep exec
             {
                 dup2(fdgrepps[RD], STDIN_FILENO);
-                close(fdgrepps[RD]);
+                close(fdgrepps[WR]);
                 dup2(fdwcgrep[WR], STDOUT_FILENO);
-                close(fdwcgrep[WR]);
+                close(fdwcgrep[RD]);
                 execlp("grep", "grep", argv[1], NULL);
             }
 
@@ -60,7 +60,7 @@ int main(int argc, char** argv){
         else                      //Wc exec
         {
             dup2(fdwcgrep[RD], STDOUT_FILENO);
-            close(fdwcgrep[RD]);
+            close(fdwcgrep[WR]);
             execlp("wc", "wc", "-l", NULL);
         }
     }
