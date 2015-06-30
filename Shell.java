@@ -12,7 +12,7 @@ public class Shell extends Thread {
 
             //Receive input
             StringBuffer input = new StringBuffer();
-            SysLib.cin( sb );
+            SysLib.cin(input);
 
             //Break if commanded
             if(input.toString().equals("exit")) {
