@@ -63,6 +63,7 @@ int main(int argc, char* argv[]){
 
             else                     //Grep exec
             {
+                wait(NULL);
                 printf("Executing grep argv[1]...\n");
                 dup2(fdgrepps[RD], STDIN_FILENO);
                 close(fdgrepps[WR]);
@@ -75,6 +76,7 @@ int main(int argc, char* argv[]){
 
         else                      //Wc exec
         {
+            wait(NULL);
             printf("Executing wc -l...\n");
             dup2(fdwcgrep[RD], STDOUT_FILENO);
             close(fdwcgrep[WR]);
