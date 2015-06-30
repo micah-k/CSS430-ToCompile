@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int main(int argc, char** argv){
+int main(int argc, char* argv[]){
     enum {RD, WR};
     int n, fdwcgrep[2], fdgrepps[2];
     pid_t pidmainwc, pidwcgrep, pidgrepps;
