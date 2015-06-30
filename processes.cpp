@@ -10,7 +10,7 @@ int main(int argc, char* argv[]){
     char buf[100];
 
     //Fork to first process
-    printf("First fork...");
+    printf("First fork...\n");
     if((pidmainwc = fork()) < 0)
     {
       perror("Fork error, grep/ps.");
@@ -19,9 +19,9 @@ int main(int argc, char* argv[]){
     
     else if(pidmainwc == 0)        //Ps exec
     {
-        printf("First fork successful.");
+        printf("First fork successful.\n");
         //Initialize first pipe, and fork to second process
-        printf("First pipe, second fork...");
+        printf("First pipe, second fork...\n");
         if(pipe(fdwcgrep) < 0)
         {
             perror("Pipe error, wc/grep.");
@@ -36,9 +36,9 @@ int main(int argc, char* argv[]){
         
         else if(pidwcgrep == 0)         //Grep code
         {
-            printf("Successful.");
+            printf("Successful.\n");
             //Initialize second pipe, and fork to third process
-            printf("Second pipe, third fork...");
+            printf("Second pipe, third fork...\n");
             if(pipe(fdgrepps) < 0)
             {
               perror("Pipe error, grep/ps.");
@@ -54,8 +54,8 @@ int main(int argc, char* argv[]){
 
             else if(pidgrepps == 0)        //Ps exec
             {
-                printf("Successful.");
-                printf("Executing ps -A...");
+                printf("Successful.\n");
+                printf("Executing ps -A...\n");
                 dup2(fdgrepps[WR], STDOUT_FILENO);
                 close(fdgrepps[RD]);
                 execlp("ps", "ps", "-A", NULL);
@@ -64,7 +64,7 @@ int main(int argc, char* argv[]){
             else                     //Grep exec
             {
                 wait(NULL);
-                printf("Executing grep argv[1]...");
+                printf("Executing grep argv[1]...\n");
                 dup2(fdgrepps[RD], STDIN_FILENO);
                 close(fdgrepps[WR]);
                 dup2(fdwcgrep[WR], STDOUT_FILENO);
@@ -77,7 +77,7 @@ int main(int argc, char* argv[]){
         else                      //Wc exec
         {
             wait(NULL);
-            printf("Executing wc -l...");
+            printf("Executing wc -l...\n");
             dup2(fdwcgrep[RD], STDOUT_FILENO);
             close(fdwcgrep[WR]);
             execlp("wc", "wc", "-l", NULL);
@@ -87,6 +87,6 @@ int main(int argc, char* argv[]){
     else                     //Main exec
     {
         wait(NULL);
-        printf("Return to parent loop.");
+        printf("Return to parent loop.\n");
     }
 }
