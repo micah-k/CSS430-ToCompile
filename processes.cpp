@@ -39,38 +39,38 @@ int main(int argc, char* argv[]){
         //     printf("Successful.\n");
         //     //Initialize second pipe, and fork to third process
         //     printf("Second pipe, third fork...\n");
-        //     if(pipe(fdgrepps) < 0)
-        //     {
-        //       perror("Pipe error, grep/ps.");
-        //       return -1;
-        //     }
+            if(pipe(fdgrepps) < 0)
+            {
+              perror("Pipe error, grep/ps.");
+              return -1;
+            }
 
             
-        //     else if((pidgrepps = fork()) < 0)
-        //     {
-        //       perror("Fork error, grep/ps.");
-        //       return -1;
-        //     }
+            else if((pidgrepps = fork()) < 0)
+            {
+              perror("Fork error, grep/ps.");
+              return -1;
+            }
 
-        //     else if(pidgrepps == 0)        //Ps exec
-        //     {
-        //         printf("Successful.\n");
+            else if(pidgrepps == 0)        //Ps exec
+            {
+                printf("Successful.\n");
                 printf("Executing ps -A...\n");
-                // dup2(fdgrepps[WR], STDOUT_FILENO);
-                // close(fdgrepps[RD]);
+                dup2(fdgrepps[WR], STDOUT_FILENO);
+                close(fdgrepps[RD]);
                 execlp("ps", "ps", "-A", NULL);
-        //     }
+            }
 
-        //     else                     //Grep exec
-        //     {
-        //         wait(NULL);
-        //         printf("Executing grep argv[1]...\n");
-        //         dup2(fdgrepps[RD], STDIN_FILENO);
-        //         close(fdgrepps[WR]);
-        //         dup2(fdwcgrep[WR], STDOUT_FILENO);
-        //         close(fdwcgrep[RD]);
-        //         execlp("grep", "grep", argv[1], NULL);
-        //     }
+            else                     //Grep exec
+            {
+                wait(NULL);
+                printf("Executing grep argv[1]...\n");
+                dup2(fdgrepps[RD], STDIN_FILENO);
+                close(fdgrepps[WR]);
+                // dup2(fdwcgrep[WR], STDOUT_FILENO);
+                // close(fdwcgrep[RD]);
+                execlp("grep", "grep", argv[1], NULL);
+            }
 
         // }
 
