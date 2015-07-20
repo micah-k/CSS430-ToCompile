@@ -130,7 +130,7 @@ public class Scheduler extends Thread
         if (tid == -1)
             return null;
         TCB tcb = new TCB(t, tid, pid); // create a new TCB
-        queue.add(tcb);
+        Q0.add(tcb);
         return tcb;
     }
 
@@ -257,7 +257,7 @@ public class Scheduler extends Thread
                         TCB currentTCB = (TCB)Q0.firstElement();
                         if (currentTCB.getTerminated() == true)
                         {
-                            queue.remove(currentTCB);
+                            Q2.remove(currentTCB);
                             returnTid(currentTCB.getTid());
                             continue;
                         }
