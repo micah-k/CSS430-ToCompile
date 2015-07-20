@@ -4,7 +4,7 @@ public class Scheduler extends Thread
 {
     private Vector[] Qs;
     private Vector Q0, Q1, Q2;
-    private int timeSlice;
+    private int timeSlice, q1CurrentTime = 0, q2CurrentTime = 0;
     private static final int DEFAULT_TIME_SLICE = 1000;
 
     // New data added to p161 
@@ -159,47 +159,141 @@ public class Scheduler extends Thread
     {
         Thread current = null;
 
-        //this.setPriority( 6 );
-
         while (true)
         {
-            try
+            if (Q0.size() == 0 && Q1.size() == 0 && Q2.size() == 0)
+                continue;
+            while (Q0.size() > 0 || Q1.size() > 0 || Q2.size() > 0)
             {
-                // get the next TCB and its thrad
-                if (Q0.size() == 0 && Q1.size() == 0 && Q2.size() == 0)
-                    continue;
-                TCB currentTCB = (TCB)queue.firstElement();
-                if (currentTCB.getTerminated() == true)
+                if (Q0.size() > 0 || Q1.size() > 0)
                 {
-                    queue.remove(currentTCB);
-                    returnTid(currentTCB.getTid());
-                    continue;
-                }
-                current = currentTCB.getThread();
-                if (current != null)
-                {
-                    if (current.isAlive())
-                        current.resume();
-                    else
+                    while (Q0.size() > 0 || Q1.size() > 0)
                     {
-                        // Spawn must be controlled by Scheduler
-                        // Scheduler must start a new thread
-                        current.start(); 
-                        //current.setPriority( 4 );
+                        while (Q0.size() > 0)
+                        {
+                            try // Q0 block
+                            {
+                                TCB currentTCB = (TCB)Q0.firstElement();
+                                if (currentTCB.getTerminated() == true)
+                                {
+                                    Q0.remove(currentTCB);
+                                    returnTid(currentTCB.getTid());
+                                    continue;
+                                }
+                                current = currentTCB.getThread();
+                                if (current != null)
+                                {
+                                    if (current.isAlive())
+                                        current.resume();
+                                    else
+                                    {
+                                        // Start a new thread
+                                        current.start();
+                                    }
+                                }
+
+                                sleepThread(timeSlice / 2);
+
+                                synchronized (queues)
+                                {
+                                    if (current != null && current.isAlive())
+                                        current.suspend();
+                                    Q0.remove(currentTCB); // Pass TCB to Q1
+                                    Q1.add(currentTCB);
+                                }
+                            }
+                            catch (NullPointerException e3) {};
+                        }
+                        try // Q1 block
+                        {
+                            // get the next TCB and its thrad
+                            if (Q1.size() > 0)
+                            {
+                                TCB currentTCB = (TCB)Q1.firstElement();
+                                if (currentTCB.getTerminated() == true)
+                                {
+                                    Q1.remove(currentTCB);
+                                    returnTid(currentTCB.getTid());
+                                    continue;
+                                }
+                                current = currentTCB.getThread();
+                                if (current != null)
+                                {
+                                    if (current.isAlive())
+                                        current.resume();
+                                    else
+                                    {
+                                        // Start a new thread
+                                        current.start();
+                                    }
+                                }
+
+                                sleepThread(timeSlice / 2);
+                                if(q1CurrentTime >= timeSlice)
+                                {
+                                    q1CurrentTime = 0;
+                                    synchronized (queues)
+                                    {
+                                        if (current != null && current.isAlive())
+                                            current.suspend();
+                                        Q1.remove(currentTCB); // Pass TCB to Q2
+                                        Q2.add(currentTCB);
+                                    }
+                                }
+                                else
+                                {
+                                    q1CurrentTime += timeSlice / 2;
+                                }
+                            }
+                        }
+                        catch (NullPointerException e3) {};
                     }
                 }
+                try // Q2 block
+                {
+                    // get the next TCB and its thrad
+                    if (Q2.size() > 0)
+                    {
+                        TCB currentTCB = (TCB)Q0.firstElement();
+                        if (currentTCB.getTerminated() == true)
+                        {
+                            queue.remove(currentTCB);
+                            returnTid(currentTCB.getTid());
+                            continue;
+                        }
+                        current = currentTCB.getThread();
+                        if (current != null)
+                        {
+                            if (current.isAlive())
+                                current.resume();
+                            else
+                            {
+                                // Start a new thread
+                                current.start();
+                            }
+                        }
 
-                schedulerSleep();
-                // System.out.println("* * * Context Switch * * * ");
-
-                synchronized (queue) {
-                if (current != null && current.isAlive())
-                    current.setPriority(2);
-                queue.remove(currentTCB); // rotate this TCB to the end
-                queue.add(currentTCB);
+                        sleepThread(timeSlice/2);
+                        // System.out.println("* * * Context Switch * * * ");
+                        if(q2CurrentTime >= timeSlice * 2)
+                        {
+                            q2CurrentTime = 0;
+                            synchronized (queues)
+                            {
+                                if (current != null && current.isAlive())
+                                    current.suspend();
+                                Q2.remove(currentTCB); // rotate this TCB to the end
+                                Q2.add(currentTCB);
+                            }
+                        }
+                        else
+                        {
+                            q2CurrentTime += timeSlice / 2;
+                        }
+                    }
                 }
+                catch (NullPointerException e3) {};
             }
-            catch (NullPointerException e3) {};
         }
     }
 }
