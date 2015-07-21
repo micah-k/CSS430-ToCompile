@@ -254,7 +254,7 @@ public class Scheduler extends Thread
                     // get the next TCB and its thrad
                     if (Q2.size() > 0)
                     {
-                        TCB currentTCB = (TCB)Q0.firstElement();
+                        TCB currentTCB = (TCB)Q2.firstElement();
                         if (currentTCB.getTerminated() == true)
                         {
                             Q2.remove(currentTCB);
