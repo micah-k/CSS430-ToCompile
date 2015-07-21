@@ -183,7 +183,7 @@ public class Scheduler extends Thread
 
                 synchronized ( queue ) {
                 if ( current != null && current.isAlive( ) )
-                    current.setPriority( 2 );
+                    current.suspend();
                 queue.remove( currentTCB ); // rotate this TCB to the end
                 queue.add( currentTCB );
                 }
