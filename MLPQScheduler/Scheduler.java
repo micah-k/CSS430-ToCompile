@@ -194,7 +194,7 @@ public class Scheduler extends Thread
 
                                 sleepThread(timeSlice / 2);
 
-                                synchronized (queues)
+                                synchronized (Qs)
                                 {
                                     if (current != null && current.isAlive())
                                         current.suspend();
@@ -232,7 +232,7 @@ public class Scheduler extends Thread
                                 if(q1CurrentTime >= timeSlice)
                                 {
                                     q1CurrentTime = 0;
-                                    synchronized (queues)
+                                    synchronized (Qs)
                                     {
                                         if (current != null && current.isAlive())
                                             current.suspend();
@@ -278,7 +278,7 @@ public class Scheduler extends Thread
                         if(q2CurrentTime >= timeSlice * 2)
                         {
                             q2CurrentTime = 0;
-                            synchronized (queues)
+                            synchronized (Qs)
                             {
                                 if (current != null && current.isAlive())
                                     current.suspend();
