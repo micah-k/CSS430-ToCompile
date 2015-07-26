@@ -87,9 +87,12 @@ public class Kernel
                         return sysExec((String[]) args);
                     case WAIT:
                         // get the current thread id
+                        myTcb = scheduler.getMyTcb();
                         // let the current thread sleep in waitQueue under the
                         // condition = this thread id
-							return OK; // return a child thread id who woke me up
+                        if(myTcb != null)
+                            return waitQueue.enqueueAndSleep(myTcb.getTid()) // return a child thread id who woke me up
+                        return ERROR;
                     case EXIT:
                         // get the current thread's parent id
                         // search waitQueue for and wakes up the thread under the
@@ -104,7 +107,7 @@ public class Kernel
                         return OK;
                     case RAWREAD: // read a block of data from disk
                         while (disk.read(param, (byte[]) args) == false)
-						    ; // busy wait
+                            ; // busy wait
                         while (disk.testAndResetReady() == false)
                             ; // busy wait
 
@@ -117,9 +120,9 @@ public class Kernel
                         return OK;
                     case RAWWRITE: // write a block of data to disk
                         while (disk.write(param, (byte[]) args) == false)
-						    ; // busy wait
+                            ; // busy wait
                         while (disk.testAndResetReady() == false)
-						    ; // busy wait
+                            ; // busy wait
                         // it's possible that a thread waiting to make a request was released by the disk,
                         // but then promptly looped back, found the buffer wasn't available for sending (bufferReady == true)
                         // and then went back to sleep
@@ -128,9 +131,9 @@ public class Kernel
                         return OK;
                     case SYNC:     // synchronize disk data to a real file
                         while (disk.sync() == false)
-						    ; // busy wait
+                            ; // busy wait
                         while (disk.testAndResetReady() == false)
-                        	; // busy wait
+                            ; // busy wait
 
                         // it's possible that a thread waiting to make a request was released by the disk,
                         // but then promptly looped back, found the buffer wasn't available for sending (bufferReady == true)
@@ -203,7 +206,7 @@ public class Kernel
                 return ERROR;
             case INTERRUPT_DISK: // Disk interrupts
                 // wake up the thread waiting for a service completion
-			    //ioQueue.dequeueAndWakeup( COND_DISK_FIN );
+                //ioQueue.dequeueAndWakeup( COND_DISK_FIN );
 
                 // wake up the thread waiting for a request acceptance
                 //    ioQueue.dequeueAndWakeup(COND_DISK_REQ);
@@ -247,24 +250,24 @@ public class Kernel
             // add this thread into scheduler's circular list.
             TCB newTcb = scheduler.addThread(t);
             return (newTcb != null) ? newTcb.getTid() : ERROR;
-		}
-		catch ( ClassNotFoundException e ) {
+        }
+        catch ( ClassNotFoundException e ) {
             System.out.println(e);
             return ERROR;
-		}
-		catch ( NoSuchMethodException e ) {
+        }
+        catch ( NoSuchMethodException e ) {
             System.out.println(e);
             return ERROR;
-		}
-		catch ( InstantiationException e ) {
+        }
+        catch ( InstantiationException e ) {
             System.out.println(e);
             return ERROR;
-		}
-		catch ( IllegalAccessException e ) {
+        }
+        catch ( IllegalAccessException e ) {
             System.out.println(e);
             return ERROR;
-		}
-		catch ( InvocationTargetException e ) {
+        }
+        catch ( InvocationTargetException e ) {
             System.out.println(e);
             return ERROR;
         }
