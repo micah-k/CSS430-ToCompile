@@ -3,11 +3,11 @@
  */
 import java.util.Vector;
 public class QueueNode {
-    private Vector<int> tids;
+    private Vector<Integer> tids;
 
     public QueueNode()
     {
-        tids = new Vector<int>();
+        tids = new Vector<Integer>();
     }
 
     public synchronized int sleep()
