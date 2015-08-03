@@ -1,7 +1,7 @@
 import java.io.*;
 
 public class Disk extends Thread {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     public static final int blockSize = 512;
     private final int trackSize = 10;
