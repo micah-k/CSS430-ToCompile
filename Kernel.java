@@ -107,9 +107,9 @@ public class Kernel
                         return OK;
                     case RAWREAD: // read a block of data from disk
                         while (disk.read(param, (byte[]) args) == false)
-                            ; // busy wait
+                            ioQueue.enqueueAndSleep(Kernel.COND_DISK_REQ); // busy wait
                         while (disk.testAndResetReady() == false)
-                            ; // busy wait
+                            ioQueue.enqueueAndSleep(Kernel.COND_DISK_FIN); // busy wait
 
                         // it's possible that a thread waiting to make a request was released by the disk,
                         // but then promptly looped back, found the buffer wasn't available for sending (bufferReady == true)
@@ -120,9 +120,9 @@ public class Kernel
                         return OK;
                     case RAWWRITE: // write a block of data to disk
                         while (disk.write(param, (byte[]) args) == false)
-                            ; // busy wait
+                            ioQueue.enqueueAndSleep(Kernel.COND_DISK_REQ); // busy wait
                         while (disk.testAndResetReady() == false)
-                            ; // busy wait
+                            ioQueue.enqueueAndSleep(Kernel.COND_DISK_FIN); // busy wait
                         // it's possible that a thread waiting to make a request was released by the disk,
                         // but then promptly looped back, found the buffer wasn't available for sending (bufferReady == true)
                         // and then went back to sleep
@@ -131,9 +131,9 @@ public class Kernel
                         return OK;
                     case SYNC:     // synchronize disk data to a real file
                         while (disk.sync() == false)
-                            ; // busy wait
+                            ioQueue.enqueueAndSleep(Kernel.COND_DISK_REQ); // busy wait
                         while (disk.testAndResetReady() == false)
-                            ; // busy wait
+                            ioQueue.enqueueAndSleep(Kernel.COND_DISK_FIN); // busy wait
 
                         // it's possible that a thread waiting to make a request was released by the disk,
                         // but then promptly looped back, found the buffer wasn't available for sending (bufferReady == true)
