@@ -108,6 +108,7 @@ public class Kernel
                                 scheduler.deleteThread();
                             }
                         }
+                        
                         return OK;
                     case SLEEP:   // sleep a given period of milliseconds
                         scheduler.sleepThread(param); // param = milliseconds
