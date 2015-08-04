@@ -98,9 +98,16 @@ public class Kernel
                         // search waitQueue for and wakes up the thread under the
                         // condition = the current thread's parent id
                         // tell the Scheduler to delete the current thread (since it is exiting)
-                        TCB tcb = scheduler.getMyTcb();
-                        waitQueue.dequeueAndWakeup(tcb.getPid(), tcb.getTid());
-                        scheduler.deleteThread();
+                        myTcb = scheduler.getMyTcb();
+                        if(myTcb != null)
+                        {
+                            int pid = myTcb.getPid(); 
+                            if(pid > -1) // Check that we're not trying to exit Thread 0.
+                            {
+                                waitQueue.dequeueAndWakeup(pid, myTcb.getTid());
+                                scheduler.deleteThread();
+                            }
+                        }
                         return OK;
                     case SLEEP:   // sleep a given period of milliseconds
                         scheduler.sleepThread(param); // param = milliseconds

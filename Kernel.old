@@ -101,10 +101,10 @@ public class Kernel
                         myTcb = scheduler.getMyTcb();
                         if(myTcb != null)
                         {
-                            int pid = tcb.getPid(); 
+                            int pid = myTcb.getPid(); 
                             if(pid > -1) // Check that we're not trying to exit Thread 0.
                             {
-                                waitQueue.dequeueAndWakeup(pid, tcb.getTid());
+                                waitQueue.dequeueAndWakeup(pid, myTcb.getTid());
                                 scheduler.deleteThread();
                             }
                         }
