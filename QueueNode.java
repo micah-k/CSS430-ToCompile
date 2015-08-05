@@ -21,7 +21,7 @@ public class QueueNode {
             catch (InterruptedException e){}  // ...until interrupted.
         }
 
-        return tids.remove(size() - 1); // Once we've come back from waiting, pop a thread ID off the queue. (If we've woken up, there should be one.)
+        return tids.remove(0); // Once we've come back from waiting, pop a thread ID off the queue. (If we've woken up, there should be one.)
     }
 
     public synchronized void wakeup(int arg)
