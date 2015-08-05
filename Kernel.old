@@ -217,7 +217,7 @@ public class Kernel
                 ioQueue.dequeueAndWakeup(COND_DISK_FIN);
 
                 // wake up the thread waiting for a request acceptance
-                //    ioQueue.dequeueAndWakeup(COND_DISK_REQ);
+                ioQueue.dequeueAndWakeup(COND_DISK_REQ);
 
                 return OK;
             case INTERRUPT_IO:   // other I/O interrupts (not implemented)
