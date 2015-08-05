@@ -108,7 +108,7 @@ public class Kernel
                                 scheduler.deleteThread();
                             }
                         }
-                        
+
                         return OK;
                     case SLEEP:   // sleep a given period of milliseconds
                         scheduler.sleepThread(param); // param = milliseconds
@@ -214,7 +214,7 @@ public class Kernel
                 return ERROR;
             case INTERRUPT_DISK: // Disk interrupts
                 // wake up the thread waiting for a service completion
-                //ioQueue.dequeueAndWakeup( COND_DISK_FIN );
+                ioQueue.dequeueAndWakeup(COND_DISK_FIN);
 
                 // wake up the thread waiting for a request acceptance
                 //    ioQueue.dequeueAndWakeup(COND_DISK_REQ);
