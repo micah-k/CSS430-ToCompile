@@ -30,6 +30,6 @@ public class SyncQueue {
     }
 
     void dequeueAndWakeup(int condition) {
-        dequeueAndWakeup(condition, queue[condition].size() - 1); // If no tid specified, use last one in queue.
+        dequeueAndWakeup(condition, 0); // If no tid specified, use last one in queue.
     }
 }
