@@ -107,7 +107,7 @@ public class Kernel
                         {
                             int pid = myTcb.getPid();
                             int tid = myTcb.getTid();
-                            System.out.println("Micah: Exiting to pid: [" + pid + "] from tid: [" + tid + "]");
+                            System.out.println("Micah: Returning to pid: [" + pid + "] from tid: [" + tid + "]");
                             if(pid > -1) // Check that we're not trying to exit Thread 0.
                             {
                                 waitQueue.dequeueAndWakeup(pid, tid);

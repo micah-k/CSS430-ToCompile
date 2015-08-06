@@ -21,14 +21,14 @@ public class QueueNode {
             }
             catch (InterruptedException e){}  // ...until interrupted.
         }
+        System.out.println("Micah: Sleep interrupted up by tid: [" + tids.get(0) + "]");
 
-        System.out.println("Micah: Woken up by tid: [" + tids.get(0) + "]");
         return tids.remove(0); // Once we've come back from waiting, pop a thread ID off the queue. (If we've woken up, there should be one.)
     }
 
     public synchronized void wakeup(int tid)
-    {        
-        System.out.println("Micah: Waking up with tid: [" + tid + "]");
+    {
+        System.out.println("Micah: Tid: [" + tids.get(0) + "] calls wakeup");
         tids.add(tid);
         notify();
     }
