@@ -13,8 +13,9 @@ public class TestThread3b extends Thread {
     private long submissionTime;
     private long completionTime;
 
-    public void run() {
-
+    public void run()
+    {
+        submissionTime = new Date().getTime();
         synchronized (Test3.syncObj)
         {
             try

@@ -13,6 +13,7 @@ public class TestThread3a extends Thread
 
     public void run()
     {
+        submissionTime = new Date().getTime();
         synchronized (Test3.syncObj) // So it turns out this was all I needed to make sure the main Test3 code didn't wait for threads that already ended.
         {
             try
