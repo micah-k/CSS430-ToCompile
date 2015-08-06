@@ -239,6 +239,8 @@ public class Kernel
         String thrName = args[0]; // args[0] has a thread name
         Object thrObj = null;
 
+
+        System.out.println("Micah: First word in command: " + args[0]);
         try {
             //get the user thread class from its name
             Class thrClass = Class.forName(thrName);
