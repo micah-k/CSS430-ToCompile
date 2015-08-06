@@ -28,7 +28,7 @@ public class QueueNode {
 
     public synchronized void wakeup(int tid)
     {
-        System.out.println("Micah: Tid: [" + tids.get(0) + "] calls wakeup");
+        System.out.println("Micah: Tid: [" + tid + "] calls wakeup");
         tids.add(tid);
         notify();
     }
