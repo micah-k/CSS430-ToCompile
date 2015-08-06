@@ -91,9 +91,11 @@ public class Kernel
                         // let the current thread sleep in waitQueue under the
                         // condition = this thread id
                         if(myTcb != null)
+                        {
                             int tid = myTcb.getTid();
                             System.out.println("Micah: Waiting tid: [" + tid + "]");
                             return waitQueue.enqueueAndSleep(tid); // return a child thread id who woke me up
+                        }
                         return ERROR;
                     case EXIT:
                         // get the current thread's parent id
