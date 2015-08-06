@@ -5,8 +5,13 @@ import java.util.Date;
  */
 public class Test3 extends Thread
 {
-    private int numThreadPairs = 3; // Defaults to 3 pairs.
+    private int numThreadPairs;
     public static Object syncObj = new Object();
+
+    public Test3()
+    {
+        numThreadPairs = 3;
+    }
 
     public Test3(String[] args)
     {
