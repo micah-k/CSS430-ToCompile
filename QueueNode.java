@@ -20,10 +20,11 @@ public class QueueNode {
                 wait(); // Wait...
             }
             catch (InterruptedException e){}  // ...until interrupted.
+
+            return tids.remove(0); // Once we've come back from waiting, pop a thread ID off the queue. (If we've woken up, there should be one.)
         }
         //System.out.println("Micah: Sleep interrupted up by tid: [" + tids.get(0) + "]");
-
-        return tids.remove(0); // Once we've come back from waiting, pop a thread ID off the queue. (If we've woken up, there should be one.)
+        return -1;
     }
 
     public synchronized void wakeup(int tid)
