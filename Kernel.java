@@ -64,7 +64,7 @@ public class Kernel
     // The heart of Kernel
     public static int interrupt(int irq, int cmd, int param, Object args) {
         TCB myTcb;
-        System.out.println("Micah: Interrupt called: [" + irq + ", " + cmd + ", " + param + "]"); System.out.flush();
+        //System.out.println("Micah: Interrupt called: [" + irq + ", " + cmd + ", " + param + "]"); System.out.flush();
         switch (irq) {
             case INTERRUPT_SOFTWARE: // System calls
                 switch (cmd) {
@@ -94,12 +94,12 @@ public class Kernel
                         if(myTcb != null)
                         {
                             int tid = myTcb.getTid();
-                            System.out.println("Micah: Waiting tid: [" + tid + "]"); System.out.flush();
+                            //System.out.println("Micah: Waiting tid: [" + tid + "]"); System.out.flush();
                             return waitQueue.enqueueAndSleep(tid); // return a child thread id who woke me up
                         }
                         return ERROR;
                     case EXIT:
-                        System.out.println("Micah: Exit called"); System.out.flush();
+                        //System.out.println("Micah: Exit called"); System.out.flush();
                         // get the current thread's parent id
                         // search waitQueue for and wakes up the thread under the
                         // condition = the current thread's parent id
@@ -109,7 +109,7 @@ public class Kernel
                         {
                             int pid = myTcb.getPid();
                             int tid = myTcb.getTid();
-                            System.out.println("Micah: Returning to pid: [" + pid + "] from tid: [" + tid + "]"); System.out.flush();
+                            //System.out.println("Micah: Returning to pid: [" + pid + "] from tid: [" + tid + "]"); System.out.flush();
                             if(pid > -1) // Check that we're not trying to exit Thread 0.
                             {
                                 waitQueue.dequeueAndWakeup(pid, tid);
@@ -117,7 +117,7 @@ public class Kernel
                                 return OK;
                             }
                         }
-                        System.out.println("Micah: No TCB?"); System.out.flush();
+                        //System.out.println("Micah: No TCB?"); System.out.flush();
 
                         return ERROR;
                     case SLEEP:   // sleep a given period of milliseconds
@@ -242,7 +242,7 @@ public class Kernel
         Object thrObj = null;
 
 
-        System.out.println("Micah: First word in command: " + args[0]); System.out.flush();
+        //System.out.println("Micah: First word in command: " + args[0]); System.out.flush();
         try {
             //get the user thread class from its name
             Class thrClass = Class.forName(thrName);

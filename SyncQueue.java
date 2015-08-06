@@ -18,7 +18,7 @@ public class SyncQueue {
     }
 
     int enqueueAndSleep(int pid) {
-        System.out.println("Micah: Sleeping pid: [" + pid + "]");
+        //System.out.println("Micah: Sleeping pid: [" + pid + "]");
 
         if (pid >= 0 && pid < queue.length)
             return queue[pid].sleep();
@@ -27,7 +27,7 @@ public class SyncQueue {
     }
 
     void dequeueAndWakeup(int pid, int tid) {  // Modified parameters because condition should equal parent ID (pid), not thread ID (tid)
-        System.out.println("Micah: Waking up pid: [" + pid + "] from tid: [" + tid + "]");
+        //System.out.println("Micah: Waking up pid: [" + pid + "] from tid: [" + tid + "]");
         if (pid >= 0 && pid < queue.length)
             queue[pid].wakeup(tid);
     }
