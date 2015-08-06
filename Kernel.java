@@ -98,6 +98,7 @@ public class Kernel
                         }
                         return ERROR;
                     case EXIT:
+                        System.out.println("Micah: Exit called");
                         // get the current thread's parent id
                         // search waitQueue for and wakes up the thread under the
                         // condition = the current thread's parent id
