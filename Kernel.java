@@ -64,6 +64,7 @@ public class Kernel
     // The heart of Kernel
     public static int interrupt(int irq, int cmd, int param, Object args) {
         TCB myTcb;
+        System.out.println("Micah: Interrupt called: [" + irq + ", " + cmd + ", " + param + "]");
         switch (irq) {
             case INTERRUPT_SOFTWARE: // System calls
                 switch (cmd) {
