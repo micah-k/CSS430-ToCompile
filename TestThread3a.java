@@ -5,7 +5,7 @@ import java.util.Date;
  */
 
 
-public class TestThread3 extends Thread 
+public class TestThread3a extends Thread 
 {
 
     private long submissionTime;

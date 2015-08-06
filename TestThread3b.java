@@ -7,7 +7,7 @@ import java.util.Random;
  */
 
 
-public class TestThread3 extends Thread {
+public class TestThread3b extends Thread {
 
 
     private long submissionTime;
