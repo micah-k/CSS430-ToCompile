@@ -31,7 +31,7 @@ public class TestThread3b extends Thread {
         byte[] randomData = new byte[BLOCK_SIZE];
         Arrays.fill(randomData, (byte)'A');
 
-        for (int i = 0; i < iterations; i++) {
+        for (int i = 0; i < 20; i++) {
             // pick random block on the disk
             // write something to that block
             // read that thing from that block

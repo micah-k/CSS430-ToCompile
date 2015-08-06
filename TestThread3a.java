@@ -25,7 +25,7 @@ public class TestThread3a extends Thread
         SysLib.cout(Thread.currentThread().getName()+" : " + getName() +" STARTING TestThread3a\n");
 
         long total = 0;
-        for (int i = 0; i < iterations; i++) {
+        for (int i = 0; i < 20; i++) {
             total += 1;
             SysLib.sleep(10);
             break;
