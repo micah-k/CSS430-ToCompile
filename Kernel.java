@@ -115,6 +115,7 @@ public class Kernel
                                 return OK;
                             }
                         }
+                        System.out.println("Micah: No TCB?");
 
                         return ERROR;
                     case SLEEP:   // sleep a given period of milliseconds
