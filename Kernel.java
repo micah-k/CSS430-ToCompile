@@ -91,7 +91,9 @@ public class Kernel
                         // let the current thread sleep in waitQueue under the
                         // condition = this thread id
                         if(myTcb != null)
-                            return waitQueue.enqueueAndSleep(myTcb.getTid()); // return a child thread id who woke me up
+                            int tid = myTcb.getTid();
+                            System.out.println("Micah: Waiting tid: [" + tid + "]");
+                            return waitQueue.enqueueAndSleep(tid); // return a child thread id who woke me up
                         return ERROR;
                     case EXIT:
                         // get the current thread's parent id
@@ -102,10 +104,11 @@ public class Kernel
                         if(myTcb != null)
                         {
                             int pid = myTcb.getPid();
-                            System.out.println("Exiting to pid: [" + pid + "]");
+                            int tid = myTcb.getTid();
+                            System.out.println("Micah: Exiting to pid: [" + pid + "] from tid: [" + tid + "]");
                             if(pid > -1) // Check that we're not trying to exit Thread 0.
                             {
-                                waitQueue.dequeueAndWakeup(pid, myTcb.getTid());
+                                waitQueue.dequeueAndWakeup(pid, tid);
                                 scheduler.deleteThread();
                                 return OK;
                             }

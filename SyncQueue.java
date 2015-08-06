@@ -17,22 +17,22 @@ public class SyncQueue {
         initQueue(condMax);
     }
 
-    int enqueueAndSleep(int condition) {
-        System.out.println("Sleeping node: [" + condition + "]");
+    int enqueueAndSleep(int pid) {
+        System.out.println("Micah: Sleeping pid: [" + pid + "]");
 
-        if (condition >= 0 && condition < queue.length)
-            return queue[condition].sleep();
+        if (pid >= 0 && pid < queue.length)
+            return queue[pid].sleep();
         else
             return NO_PID;
     }
 
-    void dequeueAndWakeup(int condition, int tid) {  // Modified parameters because condition should equal parent ID (pid), not thread ID (tid)
-        System.out.println("Waking up node: [" + condition + "] with tid: [" + tid + "]");
-        if (condition >= 0 && condition < queue.length)
-            queue[condition].wakeup(tid);
+    void dequeueAndWakeup(int pid, int tid) {  // Modified parameters because condition should equal parent ID (pid), not thread ID (tid)
+        System.out.println("Micah: Waking up node: [" + pid + "] with tid: [" + tid + "]");
+        if (pid >= 0 && pid < queue.length)
+            queue[pid].wakeup(tid);
     }
 
-    void dequeueAndWakeup(int condition) {
-        dequeueAndWakeup(condition, 0); // If no tid specified, use last one in queue.
+    void dequeueAndWakeup(int pid) {
+        dequeueAndWakeup(pid, 0); // If no tid specified, use last one in queue.
     }
 }

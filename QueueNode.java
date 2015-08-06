@@ -12,7 +12,7 @@ public class QueueNode {
 
     public synchronized int sleep()
     {
-        System.out.println("QueueNode sleeping...");
+        System.out.println("Micah: QueueNode sleeping...");
         if (size() == 0)
         {
             try
@@ -22,14 +22,14 @@ public class QueueNode {
             catch (InterruptedException e){}  // ...until interrupted.
         }
 
-        System.out.println("Woken up by tid: [" + tids.get(0) + "]");
+        System.out.println("Micah: Woken up by tid: [" + tids.get(0) + "]");
         return tids.remove(0); // Once we've come back from waiting, pop a thread ID off the queue. (If we've woken up, there should be one.)
     }
 
-    public synchronized void wakeup(int arg)
+    public synchronized void wakeup(int tid)
     {        
-        System.out.println("Waking up with tid: [" + arg + "]");
-        tids.add(arg);
+        System.out.println("Micah: Waking up with tid: [" + tid + "]");
+        tids.add(tid);
         notify();
     }
 
