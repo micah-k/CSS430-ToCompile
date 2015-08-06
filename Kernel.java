@@ -101,7 +101,8 @@ public class Kernel
                         myTcb = scheduler.getMyTcb();
                         if(myTcb != null)
                         {
-                            int pid = myTcb.getPid(); 
+                            int pid = myTcb.getPid();
+                            System.out.println("Exiting to pid: [" + pid + "]");
                             if(pid > -1) // Check that we're not trying to exit Thread 0.
                             {
                                 waitQueue.dequeueAndWakeup(pid, myTcb.getTid());

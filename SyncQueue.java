@@ -18,6 +18,8 @@ public class SyncQueue {
     }
 
     int enqueueAndSleep(int condition) {
+        System.out.println("Sleeping node: [" + condition + "]");
+
         if (condition >= 0 && condition < queue.length)
             return queue[condition].sleep();
         else
@@ -25,6 +27,7 @@ public class SyncQueue {
     }
 
     void dequeueAndWakeup(int condition, int tid) {  // Modified parameters because condition should equal parent ID (pid), not thread ID (tid)
+        System.out.println("Waking up node: [" + condition + "] with tid: [" + tid + "]");
         if (condition >= 0 && condition < queue.length)
             queue[condition].wakeup(tid);
     }
