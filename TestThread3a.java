@@ -29,7 +29,6 @@ public class TestThread3a extends Thread
         for (int i = 0; i < 20; i++) {
             total += 1;
             SysLib.sleep(10);
-            break;
         }
 
         completionTime = new Date().getTime();

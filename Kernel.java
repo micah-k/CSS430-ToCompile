@@ -95,7 +95,10 @@ public class Kernel
                         {
                             int tid = myTcb.getTid();
                             //System.out.println("Micah: Waiting tid: [" + tid + "]"); System.out.flush();
-                            return waitQueue.enqueueAndSleep(tid); // return a child thread id who woke me up
+                            if(tid > -1)
+                            {
+                                return waitQueue.enqueueAndSleep(tid); // return a child thread id who woke me up
+                            }
                         }
                         return ERROR;
                     case EXIT:
