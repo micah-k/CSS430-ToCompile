@@ -4,7 +4,7 @@ public class Cache
 {
     private int bSize;
     private int victim;
-    private Vector<byte> cache;
+    private Vector<byte[]> cache;
 
     private class Entry
     {
@@ -27,7 +27,7 @@ public class Cache
     {
         bSize = blockSize;
         victim = 0;
-        cache = new Vector<byte>();
+        cache = new Vector<byte[]>();
         pageTable = new Entry[cacheBlocks];
 
         for (int i = 0; i < cacheBlocks; i++)
@@ -107,9 +107,9 @@ public class Cache
 
         byte[] block = new byte[bSize];
         System.arraycopy(buffer, 0, block, 0, bSize);
-        cache[i] = block;
-        pageTable[i].frame = blockId;
-        pageTable[i].refbit = true;
+        cache[freePage] = block;
+        pageTable[freePage].frame = blockId;
+        pageTable[freePage].refbit = true;
         return true;
     }
 
@@ -138,10 +138,10 @@ public class Cache
 
         byte[] block = new byte[bSize];
         System.arraycopy(buffer, 0, block, 0, bSize);
-        cache[i] = block;
-        pageTable[i].frame = blockId;
-        pageTable[i].refbit = true;
-        pageTable[i].dirtybit = true;
+        cache[freePage] = block;
+        pageTable[freePage].frame = blockId;
+        pageTable[freePage].refbit = true;
+        pageTable[freePage].dirtybit = true;
         return true;
     }
 
