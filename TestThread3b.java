@@ -42,6 +42,7 @@ public class TestThread3b extends Thread {
             SysLib.rawwrite(randomBlock, randomData);
             //System.out.println(Thread.currentThread().getName() + ": (" + name + "): about to rawread");
             SysLib.rawread(randomBlock, randomData);
+            break;
         }
 
         completionTime = new Date().getTime();
