@@ -78,8 +78,7 @@ public class Cache
     {
         if (pageTable[victimEntry].frame != -1)
         {
-            byte[] block = cache[victimEntry];
-            SysLib.rawwrite(pageTable[victimEntry].frame, block);
+            SysLib.rawwrite(pageTable[victimEntry].frame, cache.elementAt(victimEntry));
             pageTable[victimEntry].dirtybit = false;
         }
     }
@@ -93,7 +92,8 @@ public class Cache
         {
             if (pageTable[i].frame == blockId)
             {
-                System.arraycopy(cache[i], 0, buffer, 0, bSize);
+                byte[] block = cache.elementAt(i);
+                System.arraycopy(block, 0, buffer, 0, bSize);
                 pageTable[i].refbit = true;
                 return true;
             }
@@ -107,7 +107,7 @@ public class Cache
 
         byte[] block = new byte[bSize];
         System.arraycopy(buffer, 0, block, 0, bSize);
-        cache[freePage] = block;
+        cache.set(freePage, block);
         pageTable[freePage].frame = blockId;
         pageTable[freePage].refbit = true;
         return true;
@@ -124,7 +124,7 @@ public class Cache
             {
                 byte[] block = new byte[bSize];
                 System.arraycopy(buffer, 0, block, 0, bSize);
-                cache[i] = block;
+                cache.set(i, block);
                 pageTable[i].refbit = true;
                 pageTable[i].dirtybit = true;
             }
@@ -138,7 +138,7 @@ public class Cache
 
         byte[] block = new byte[bSize];
         System.arraycopy(buffer, 0, block, 0, bSize);
-        cache[freePage] = block;
+        cache.set(freePage, block);
         pageTable[freePage].frame = blockId;
         pageTable[freePage].refbit = true;
         pageTable[freePage].dirtybit = true;
