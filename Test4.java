@@ -125,7 +125,7 @@ public class Test4 extends Thread
                 test = "adversary accesses";
                 break;
             default:
-                test = "\/\/BAD TEST ERROR\\\\";
+                test = "\\\\BAD TEST ERROR\\\\";
         }
         SysLib.cout("Test4, " + test + " with cache " +
                 (enabled ? "enabled" : "disabled") + 
