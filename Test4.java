@@ -43,7 +43,7 @@ public class Test4 extends Thread
     {
         for (int i = 0; i < 200; i++)
         {
-            switch (testcase)
+            switch (testSelection)
             {
                 case 1: 
                     blockAddrs[i] = Math.abs(r.nextInt()) % 512;
@@ -52,7 +52,7 @@ public class Test4 extends Thread
                     blockAddrs[i] = Math.abs(r.nextInt()) % 10;
                     break;
                 case 3: 
-                    blockAddrs[i] = (Math.abs(rand.nextInt() % 10) == 9) ?
+                    blockAddrs[i] = (Math.abs(r.nextInt() % 10) == 9) ?
                             Math.abs(r.nextInt()) % 512 :
                             Math.abs(r.nextInt()) % 10;
                     break;
@@ -104,7 +104,6 @@ public class Test4 extends Thread
         long submissionTime = new Date().getTime();
 
         SysLib.flush();
-        startTime = new Date().getTime();
         testAccesses();
 
         long completionTime = new Date().getTime();
