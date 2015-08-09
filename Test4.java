@@ -14,9 +14,9 @@ public class Test4 extends Thread
     private void readSelect(int blockId, byte buffer[])
     {
         if (enabled)
-            SysLib.cread(paramInt, paramArrayOfByte);
+            SysLib.cread(blockId, buffer);
         else 
-            SysLib.rawread(paramInt, paramArrayOfByte);
+            SysLib.rawread(blockId, buffer);
     }
 
 
@@ -24,9 +24,9 @@ public class Test4 extends Thread
     private void writeSelect(int blockId, byte buffer[])
     {
         if (enabled)
-            SysLib.cwrite(paramInt, paramArrayOfByte);
+            SysLib.cwrite(blockId, buffer);
         else
-            SysLib.rawwrite(paramInt, paramArrayOfByte);
+            SysLib.rawwrite(blockId, buffer);
     }
 
     public Test4(String[] args)
@@ -41,7 +41,7 @@ public class Test4 extends Thread
 
     private void fillBlockAddrs()
     {
-        for (i = 0; i < 200; i++)
+        for (int i = 0; i < 200; i++)
         {
             switch (testcase)
             {
