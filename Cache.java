@@ -134,7 +134,7 @@ public class Cache
         if (freePage == -1) freePage = nextVictim();
         if (pageTable[freePage].dirtybit) writeBack(freePage);
 
-        SysLib.rawread(blockId, buffer);
+        SysLib.rawwrite(blockId, buffer);
 
         byte[] block = new byte[bSize];
         System.arraycopy(buffer, 0, block, 0, bSize);
