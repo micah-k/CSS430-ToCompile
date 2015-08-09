@@ -11,7 +11,7 @@ public class Test4 extends Thread
     Random r;
 
 
-    private void readSelect(int blockId, byte buffer[])
+    private void readSelect(int blockId, byte[] buffer)
     {
         if (enabled)
             SysLib.cread(blockId, buffer);
@@ -21,7 +21,7 @@ public class Test4 extends Thread
 
 
   
-    private void writeSelect(int blockId, byte buffer[])
+    private void writeSelect(int blockId, byte[] buffer)
     {
         if (enabled)
             SysLib.cwrite(blockId, buffer);
@@ -92,7 +92,8 @@ public class Test4 extends Thread
                 if (readBytes[byteNum] != writtenBytes[byteNum])
                 {
                     SysLib.cerr("Iteration " + i +": Error in block " +
-                        blockAddrs[i] + ", byte " + byteNum + "\n");
+                        blockAddrs[i] + ", byte " + byteNum + ". Expected " +
+                        writtenBytes[byteNum] + " got " + readBytes[byteNum] + "\n");
                     SysLib.exit();
                 }
             }
