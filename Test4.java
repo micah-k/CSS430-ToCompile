@@ -93,7 +93,8 @@ public class Test4 extends Thread
                 {
                     SysLib.cerr("Iteration " + i +": Error in block " +
                         blockAddrs[i] + ", byte " + byteNum + ". Expected " +
-                        writtenBytes[i][byteNum] + " got " + readBytes[byteNum] + "\n");
+                        writtenBytes[i][byteNum] + " got " + readBytes[byteNum] +
+                        ". Previous iteration byte: " + writtenBytes[i-1][byteNum] + "\n");
                     SysLib.exit();
                 }
             }
