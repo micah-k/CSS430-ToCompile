@@ -7,7 +7,7 @@ public class Test4 extends Thread
 
     int[] blockAddrs;
     byte[] readBytes;
-    byte[][] writtenBytes;
+    byte[] writtenBytes;
     Random r;
 
 
@@ -35,7 +35,7 @@ public class Test4 extends Thread
         testSelection = Integer.parseInt(args[1]);
         r = new Random();
         readBytes = new byte[512];
-        writtenBytes = new byte[200][512];
+        writtenBytes = new byte[512];
         blockAddrs = new int[200];
     }
 
@@ -79,21 +79,17 @@ public class Test4 extends Thread
         {
             for (byteNum = 0; byteNum < 512; byteNum++)
             {
-                writtenBytes[i][byteNum] = (byte)(r.nextInt() % 64);
+                writtenBytes[byteNum] = (byte)(r.nextInt() % 64);
             }
-            writeSelect(blockAddrs[i], writtenBytes[i]);
-        }
-
-        for (i = 0; i < 200; i++)
-        {
+            writeSelect(blockAddrs[i], writtenBytes);
             readSelect(blockAddrs[i], readBytes);
             for (byteNum = 0; byteNum < 512; byteNum++)
             {
-                if (readBytes[byteNum] != writtenBytes[i][byteNum])
+                if (readBytes[byteNum] != writtenBytes[byteNum])
                 {
                     SysLib.cerr("Iteration " + i +": Error in block " +
                         blockAddrs[i] + ", byte " + byteNum + ". Expected " +
-                        writtenBytes[i][byteNum] + " got " + readBytes[byteNum] + "\n");
+                        writtenBytes[byteNum] + " got " + readBytes[byteNum] + "\n");
                     SysLib.exit();
                 }
             }
@@ -130,7 +126,7 @@ public class Test4 extends Thread
         SysLib.cout("Test4, " + test + " with cache " +
                 (enabled ? "enabled" : "disabled") + 
                 ":\n\tturnaround time = " + (completionTime - submissionTime) +
-                "\n Lucky number is " + writtenBytes[199][511]);
+                "\n Lucky number is " + writtenBytes[511]);
 
         SysLib.exit();
     }
