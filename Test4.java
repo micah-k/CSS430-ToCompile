@@ -57,7 +57,8 @@ public class Test4 extends Thread
                             Math.abs(r.nextInt()) % 10;
                     break;
                 case 4: 
-                    blockAddrs[i] = (i * 100) - 1;
+                    blockAddrs[i] = (i % 11) * 100;
+                    if(
                     break;
                 default:
                     blockAddrs[i] = 1; // If you got here I don't even care.
