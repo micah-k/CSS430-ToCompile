@@ -58,7 +58,6 @@ public class Test4 extends Thread
                     break;
                 case 4: 
                     blockAddrs[i] = (i % 11) * 80 + 1;
-                    if(
                     break;
                 default:
                     blockAddrs[i] = 1; // If you got here I don't even care.
