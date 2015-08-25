@@ -125,8 +125,7 @@ public class Test4 extends Thread
         }
         SysLib.cout("Test4, " + test + " with cache " +
                 (enabled ? "enabled" : "disabled") + 
-                ":\n\tturnaround time = " + (completionTime - submissionTime) +
-                "\n Lucky number is " + writtenBytes[511]);
+                ":\n\tturnaround time = " + (completionTime - submissionTime) + "\n");
 
         SysLib.exit();
     }
